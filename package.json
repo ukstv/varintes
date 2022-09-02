@@ -1,6 +1,6 @@
 {
   "name": "varintes",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Unsigned Varint encoding and decoding, exposed as ESModule",
   "keywords": [
     "unsigned-varint",
@@ -22,28 +22,40 @@
   ],
   "exports": {
     ".": {
-      "default": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "import": {
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      }
     },
     "./decode": {
-      "default": "./dist/decode.js",
-      "types": "./dist/decode.d.ts"
+      "import": {
+        "default": "./dist/decode.js",
+        "types": "./dist/decode.d.ts"
+      }
     },
     "./decode-pack": {
-      "default": "./dist/decode-pack.js",
-      "types": "./dist/decode-pack.d.ts"
+      "import": {
+        "default": "./dist/decode-pack.js",
+        "types": "./dist/decode-pack.d.ts"
+      }
     },
     "./encode": {
-      "default": "./dist/encode.js",
-      "types": "./dist/encode.d.ts"
+      "import": {
+        "default": "./dist/encode.js",
+        "types": "./dist/encode.d.ts"
+      }
     },
     "./encode-pack": {
-      "default": "./dist/encode-pack.js",
-      "types": "./dist/encode-pack.d.ts"
+      "import": {
+        "default": "./dist/encode-pack.js",
+        "types": "./dist/encode-pack.d.ts"
+      }
     },
     "./encoding-length": {
-      "default": "./dist/encoding-length.js",
-      "types": "./dist/encoding-length.d.ts"
+      "import": {
+        "default": "./dist/encoding-length.js",
+        "types": "./dist/encoding-length.d.ts"
+      }
     }
   },
   "scripts": {
