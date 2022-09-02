@@ -1,3 +1,5 @@
+import { encodingLength } from "./encoding-length.js";
+
 const MSB = 0x80;
 const REST = 0x7f;
 const MSBALL = ~REST;
@@ -13,7 +15,7 @@ export function encode(num: number): Uint8Array {
   if (Number.MAX_SAFE_INTEGER && num > Number.MAX_SAFE_INTEGER) {
     throw new RangeError(`Could not encode ${num} as varint`);
   }
-  const buffer = [];
+  const buffer = new Uint8Array(encodingLength(num));
   let bytes = 0;
   while (num >= INT) {
     buffer[bytes++] = (num & 0xff) | MSB;
@@ -25,5 +27,5 @@ export function encode(num: number): Uint8Array {
   }
   buffer[bytes] = num | 0;
 
-  return new Uint8Array(buffer);
+  return buffer;
 }

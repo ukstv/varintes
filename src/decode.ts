@@ -7,13 +7,14 @@ const REST = 0x7f;
  * @param buffer - input that contains an encoded varint.
  * @return [decoded-varint, bytes-read]
  */
-export function decode(buffer: ArrayLike<number>): [number, number] {
+export function decode(buffer: Uint8Array): [number, number] {
   let result = 0;
   let bytesRead = 0;
   let byte = 0;
   let shift = 0;
+  const bufferLength = buffer.length;
   do {
-    if (bytesRead >= buffer.length || shift > 49) {
+    if (bytesRead >= bufferLength || shift > 49) {
       throw new RangeError("Could not decode varint");
     }
     byte = buffer[bytesRead++];
