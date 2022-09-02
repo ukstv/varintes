@@ -1,6 +1,6 @@
 {
   "name": "varintes",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Unsigned Varint encoding and decoding, exposed as ESModule",
   "keywords": [
     "unsigned-varint",
@@ -14,49 +14,24 @@
   "bugs": {
     "url": "https://github.com/ukstv/varintes/issues"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "type": "module",
   "files": [
     "dist"
   ],
-  "exports": {
-    ".": {
-      "import": {
-        "default": "./dist/index.js",
-        "types": "./dist/index.d.ts"
-      }
-    },
-    "./decode": {
-      "import": {
-        "default": "./dist/decode.js",
-        "types": "./dist/decode.d.ts"
-      }
-    },
-    "./decode-pack": {
-      "import": {
-        "default": "./dist/decode-pack.js",
-        "types": "./dist/decode-pack.d.ts"
-      }
-    },
-    "./encode": {
-      "import": {
-        "default": "./dist/encode.js",
-        "types": "./dist/encode.d.ts"
-      }
-    },
-    "./encode-pack": {
-      "import": {
-        "default": "./dist/encode-pack.js",
-        "types": "./dist/encode-pack.d.ts"
-      }
-    },
-    "./encoding-length": {
-      "import": {
-        "default": "./dist/encoding-length.js",
-        "types": "./dist/encoding-length.d.ts"
-      }
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*"
+      ]
     }
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./decode": "./dist/decode.js",
+    "./decode-pack": "./dist/decode-pack.js",
+    "./encode": "./dist/encode.js",
+    "./encode-pack": "./dist/encode-pack.js",
+    "./encoding-length": "./dist/encoding-length.js"
   },
   "scripts": {
     "test": "./node_modules/.bin/tsm ./node_modules/uvu/bin.js . .+\\.test\\.ts",
