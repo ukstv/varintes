@@ -1,5 +1,18 @@
-const MSB = 0x80;
-const REST = 0x7f;
+const MSB = 0x80;   // 1000 0000
+const REST = 0x7f;  // 0111 1111
+
+const SHIFTS = {
+  0: Math.pow(2, 0),
+  7: Math.pow(2, 7),
+  14: Math.pow(2, 14),
+  21: Math.pow(2, 21),
+  28: Math.pow(2, 28),
+  35: Math.pow(2, 35),
+  42: Math.pow(2, 42),
+  49: Math.pow(2, 49),
+  56: Math.pow(2, 56),
+  63: Math.pow(2, 63),
+}
 
 /**
  * Decode varint from input `buffer`. Return a decoded number and an amount of bytes read while decoding.
@@ -11,16 +24,18 @@ export function decode(buffer: Uint8Array): [number, number] {
   let result = 0;
   let bytesRead = 0;
   let byte = 0;
-  let shift = 0;
-  const bufferLength = buffer.length;
+  let shift: keyof typeof SHIFTS = 0;
+
   do {
-    if (bytesRead >= bufferLength || shift > 49) {
-      throw new RangeError("Could not decode varint");
-    }
     byte = buffer[bytesRead++];
-    result += shift < 28 ? (byte & REST) << shift : (byte & REST) * Math.pow(2, shift);
+    // @ts-ignore
+    result += shift < 28 ? (byte & REST) << shift : (byte & REST) * SHIFTS[shift];
     shift += 7;
-  } while (byte >= MSB);
+  } while (byte >= MSB && shift <= 56);
+
+  if (shift > 56 || bytesRead > buffer.length) {
+    throw new RangeError("Could not decode varint");
+  }
 
   return [result, bytesRead];
 }

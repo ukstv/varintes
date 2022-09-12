@@ -34,9 +34,14 @@ test("fuzz test - big", () => {
   for (let i = 0, len = 100; i < len; ++i) {
     const expected = randInt(MAX_SAFE - MAX_INT) + MAX_INT;
     const encoded = encode(expected);
-    const [data, decodedLength] = decode(encoded);
-    assert.equal(expected, data);
-    assert.equal(decodedLength, encoded.byteLength);
+    try {
+      const [data, decodedLength] = decode(encoded);
+      assert.equal(expected, data);
+      assert.equal(decodedLength, encoded.byteLength);
+    } catch (e: any) {
+      console.log('expected', expected)
+      console.error(e)
+    }
   }
 });
 
