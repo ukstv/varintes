@@ -1,9 +1,12 @@
+import { test } from "uvu";
+import * as assert from "uvu/assert";
 import { fromString } from "uint8arrays/from-string";
+import { toString } from "uint8arrays/to-string";
 import { concat } from "uint8arrays/concat";
 import { decodePack } from "../decode-pack.js";
 import { randInt } from "./test-util.js";
 import { encode } from "../encode.js";
-import { encodePack } from "../encode-pack";
+import { encodePack } from "../encode-pack.js";
 
 const handcraftedCases = {
   "05": [5],
@@ -14,15 +17,27 @@ const handcraftedCases = {
 };
 
 const handcraftedCasesTable = Object.entries(handcraftedCases).map((row) => ({
+  hex: row[0].toLowerCase(),
   bytes: fromString(row[0].toLowerCase(), "base16"),
   values: row[1],
 }));
 
-test.each(handcraftedCasesTable)("handcrafted decodePack(0x$hex)", (knownCase) => {
-  const encoded = encodePack(knownCase.values);
-  expect(encoded).toEqual(knownCase.bytes);
-  const decoded = decodePack(knownCase.bytes);
-  expect(decoded).toEqual(knownCase.values);
+handcraftedCasesTable.forEach((row) => {
+  test(`handcrafted decodePack(0x${row.hex})`, () => {
+    const encoded = encodePack(row.values);
+    assert.equal(encoded, row.bytes);
+    const decoded = decodePack(row.bytes);
+    assert.equal(decoded, row.values);
+  });
+});
+
+handcraftedCasesTable.forEach((row) => {
+  test(`handcrafted decodePack(0x${row.hex})`, () => {
+    const encoded = encodePack(row.values);
+    assert.equal(encoded, row.bytes);
+    const decoded = decodePack(row.bytes);
+    assert.equal(decoded, row.values);
+  });
 });
 
 const fuzzyCasesTable = Array.from({ length: 30 }).map(() => {
@@ -31,16 +46,21 @@ const fuzzyCasesTable = Array.from({ length: 30 }).map(() => {
     // Random number that is encoded in `byteLength` bytes, and is less than `Number.MAX_SAFE_INTEGER`.
     return randInt(Math.pow(2, 7 * byteLength), Math.pow(2, 7 * (byteLength - 1)));
   });
-  const encoded = concat(numbers.map(encode));
+  const encoded = new Uint8Array(concat(numbers.map(encode)));
   return {
+    hex: toString(encoded, "hex"),
     bytes: encoded,
     values: numbers,
   };
 });
 
-test.each(fuzzyCasesTable)("fuzzy decodePack(0x$hex)", (knownCase) => {
-  const encoded = encodePack(knownCase.values);
-  expect(encoded).toEqual(knownCase.bytes);
-  const decoded = decodePack(knownCase.bytes);
-  expect(decoded).toEqual(knownCase.values);
+fuzzyCasesTable.forEach((row) => {
+  test(`fuzzy decodePack(0x${row.hex})`, () => {
+    const encoded = encodePack(row.values);
+    assert.equal(encoded, row.bytes);
+    const decoded = decodePack(row.bytes);
+    assert.equal(decoded, row.values);
+  });
 });
+
+test.run();
