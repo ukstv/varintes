@@ -49,6 +49,11 @@ const packed = varintes.encodePack([1, 17, 4242]); // Uint8Array(4) [ 1, 17, 146
 const unpacked = varintes.decodePack(packed); // [1, 17, 4242]
 ```
 
+# To Do
+
+- [ ] Faster encode by loop unrolling
+- [ ] Faster decode by loop unrolling
+
 ## License
 
 MIT or APACHE-2.0
