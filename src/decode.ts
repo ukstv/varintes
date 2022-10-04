@@ -18,11 +18,12 @@ const SHIFTS = {
  * Decode varint from input `buffer`. Return a decoded number and an amount of bytes read while decoding.
  *
  * @param buffer - input that contains an encoded varint.
+ * @param offset
  * @return [decoded-varint, bytes-read]
  */
-export function decode(buffer: Uint8Array): [number, number] {
+export function decode(buffer: Uint8Array, offset: number = 0): [number, number] {
   let result = 0;
-  let bytesRead = 0;
+  let bytesRead = offset;
   let byte = 0;
   let shift: keyof typeof SHIFTS = 0;
 
@@ -37,5 +38,5 @@ export function decode(buffer: Uint8Array): [number, number] {
     throw new RangeError("Could not decode varint");
   }
 
-  return [result, bytesRead];
+  return [result, bytesRead - offset];
 }

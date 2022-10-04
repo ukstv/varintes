@@ -10,6 +10,13 @@ test("two bytes", () => {
   assert.equal(length, 2);
 });
 
+test("with offset", () => {
+  const buffer = new Uint8Array([10, 20, 172, 2]);
+  const [decoded, length] = decode(buffer, 2);
+  assert.equal(decoded, 300);
+  assert.equal(length, 2);
+});
+
 test("test decode single bytes", () => {
   const original = randInt(parseInt("1111111", 2));
   const buffer = new Uint8Array([original]);
