@@ -9,15 +9,15 @@ const INT = Math.pow(2, 31);
  * Encode number as varint bytes.
  *
  * @param num - Number to encode.
- * @param out - Buffer to write to. If not specified, empty buffer is used.
+ * @param out - Uint8Array bytes to write to. If not specified, empty buffer is used.
  * @param offset - Offset to use for the `out` buffer.
- * @return Uint8Array - `num` encoded as bytes according to varint spec.
+ * @return [Uint8Array, number] - Uint8Array with`num` encoded as bytes according to varint spec, and number of bytes written.
  */
 export function encode(
   num: number,
   out: Uint8Array = new Uint8Array(encodingLength(num)),
   offset: number = 0
-): Uint8Array {
+): [Uint8Array, number] {
   if (Number.MAX_SAFE_INTEGER && num > Number.MAX_SAFE_INTEGER) {
     throw new RangeError(`Could not encode ${num} as varint`);
   }
@@ -32,5 +32,5 @@ export function encode(
   }
   out[bytes] = num | 0;
 
-  return out;
+  return [out, bytes - offset];
 }

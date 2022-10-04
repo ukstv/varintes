@@ -7,7 +7,7 @@ import { randInt } from "./test-util.js";
 test("fuzz test", () => {
   for (let i = 0, len = 100; i < len; ++i) {
     const original = randInt(0x7fffffff);
-    const encoded = encode(original);
+    const [encoded] = encode(original);
     const [decoded, length] = decode(encoded);
     assert.equal(decoded, original);
     assert.equal(length, encoded.length);
@@ -20,7 +20,7 @@ test("big integers", () => {
     bigs.push(Math.pow(2, i) - 1);
   }
   bigs.forEach((n) => {
-    const encoded = encode(n);
+    const [encoded] = encode(n);
     const [decoded] = decode(encoded);
     assert.equal(decoded, n);
     assert.not.equal(decoded, n - 1);
@@ -33,7 +33,7 @@ test("fuzz test - big", () => {
 
   for (let i = 0, len = 100; i < len; ++i) {
     const expected = randInt(MAX_SAFE - MAX_INT) + MAX_INT;
-    const encoded = encode(expected);
+    const [encoded] = encode(expected);
     try {
       const [data, decodedLength] = decode(encoded);
       assert.equal(expected, data);
@@ -46,7 +46,7 @@ test("fuzz test - big", () => {
 });
 
 test("buffer too short", function () {
-  const buffer = encode(9812938912312);
+  const [buffer] = encode(9812938912312);
   let l = buffer.length;
   while (l--) {
     assert.throws(() => {
