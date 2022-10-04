@@ -1,6 +1,6 @@
 {
   "name": "varintes",
-  "version": "2.0.0-a.2",
+  "version": "2.0.0-a.3",
   "description": "Unsigned Varint encoding and decoding, exposed as ESModule",
   "keywords": [
     "unsigned-varint",
@@ -18,7 +18,6 @@
   "files": [
     "dist"
   ],
-  "main": "dist/index.js",
   "sideEffects": false,
   "typesVersions": {
     "*": {
