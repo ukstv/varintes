@@ -46,7 +46,7 @@ const fuzzyCasesTable = Array.from({ length: 30 }).map(() => {
     // Random number that is encoded in `byteLength` bytes, and is less than `Number.MAX_SAFE_INTEGER`.
     return randInt(Math.pow(2, 7 * byteLength), Math.pow(2, 7 * (byteLength - 1)));
   });
-  const encoded = new Uint8Array(concat(numbers.map(encode)));
+  const encoded = new Uint8Array(concat(numbers.map((n) => encode(n))));
   return {
     hex: toString(encoded, "hex"),
     bytes: encoded,

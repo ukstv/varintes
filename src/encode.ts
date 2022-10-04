@@ -8,24 +8,29 @@ const INT = Math.pow(2, 31);
 /**
  * Encode number as varint bytes.
  *
- * @param num - Number to encode
+ * @param num - Number to encode.
+ * @param out - Buffer to write to. If not specified, empty buffer is used.
+ * @param offset - Offset to use for the `out` buffer.
  * @return Uint8Array - `num` encoded as bytes according to varint spec.
  */
-export function encode(num: number): Uint8Array {
+export function encode(
+  num: number,
+  out: Uint8Array = new Uint8Array(encodingLength(num)),
+  offset: number = 0
+): Uint8Array {
   if (Number.MAX_SAFE_INTEGER && num > Number.MAX_SAFE_INTEGER) {
     throw new RangeError(`Could not encode ${num} as varint`);
   }
-  const buffer = new Uint8Array(encodingLength(num));
-  let bytes = 0;
+  let bytes = offset;
   while (num >= INT) {
-    buffer[bytes++] = (num & 0xff) | MSB;
+    out[bytes++] = (num & 0xff) | MSB;
     num /= 128;
   }
   while (num & MSBALL) {
-    buffer[bytes++] = (num & 0xff) | MSB;
+    out[bytes++] = (num & 0xff) | MSB;
     num >>>= 7;
   }
-  buffer[bytes] = num | 0;
+  out[bytes] = num | 0;
 
-  return buffer;
+  return out;
 }
