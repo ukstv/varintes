@@ -8,11 +8,11 @@ import { decode } from "./decode.js";
  */
 export function decodePack(buffer: Uint8Array): number[] {
   const result: number[] = [];
-  let index = 0;
-  while (buffer.length > 0) {
-    const [num, bytesRead] = decode(buffer);
-    result[index++] = num;
-    buffer = buffer.subarray(bytesRead);
+  let offset = 0;
+  while (offset < buffer.length) {
+    const [num, bytesRead] = decode(buffer, offset);
+    result.push(num);
+    offset += bytesRead;
   }
 
   return result;
