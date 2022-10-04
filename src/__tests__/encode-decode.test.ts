@@ -7,10 +7,11 @@ import { randInt } from "./test-util.js";
 test("fuzz test", () => {
   for (let i = 0, len = 100; i < len; ++i) {
     const original = randInt(0x7fffffff);
-    const [encoded] = encode(original);
-    const [decoded, length] = decode(encoded);
+    const [encoded, encodedLength] = encode(original);
+    const [decoded, decodedLength] = decode(encoded);
     assert.equal(decoded, original);
-    assert.equal(length, encoded.length);
+    assert.equal(decodedLength, encoded.length);
+    assert.equal(encodedLength, encoded.length);
   }
 });
 
@@ -33,21 +34,21 @@ test("fuzz test - big", () => {
 
   for (let i = 0, len = 100; i < len; ++i) {
     const expected = randInt(MAX_SAFE - MAX_INT) + MAX_INT;
-    const [encoded] = encode(expected);
+    const [encoded, encodedLength] = encode(expected);
     try {
       const [data, decodedLength] = decode(encoded);
       assert.equal(expected, data);
-      assert.equal(decodedLength, encoded.byteLength);
+      assert.equal(decodedLength, encodedLength);
     } catch (e: any) {
       console.log("expected", expected);
-      console.error(e);
+      assert.unreachable(e);
     }
   }
 });
 
 test("buffer too short", function () {
-  const [buffer] = encode(9812938912312);
-  let l = buffer.length;
+  const [buffer, encodedLength] = encode(9812938912312);
+  let l = encodedLength;
   while (l--) {
     assert.throws(() => {
       decode(buffer.slice(0, l));

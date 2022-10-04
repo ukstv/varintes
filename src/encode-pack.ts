@@ -11,9 +11,8 @@ export function encodePack(numbers: number[]): Uint8Array {
   const result = new Uint8Array(totalLength);
   let offset = 0;
   numbers.forEach((n) => {
-    const [bytes] = encode(n);
-    result.set(bytes, offset);
-    offset += bytes.byteLength;
+    const [_, len] = encode(n, result, offset);
+    offset += len;
   });
   return result;
 }

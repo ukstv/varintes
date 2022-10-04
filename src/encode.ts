@@ -32,5 +32,5 @@ export function encode(
   }
   out[bytes] = num | 0;
 
-  return [out, bytes - offset];
+  return [out, bytes - offset + 1];
 }
