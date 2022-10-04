@@ -1,7 +1,7 @@
 import { encodingLength } from "./encoding-length.js";
 
-const MSB = 0x80;   // 1000 0000
-const REST = 0x7f;  // 0111 1111
+const MSB = 0x80; // 1000 0000
+const REST = 0x7f; // 0111 1111
 const MSBALL = ~REST;
 const INT = Math.pow(2, 31);
 

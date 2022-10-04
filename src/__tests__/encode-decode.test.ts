@@ -39,8 +39,8 @@ test("fuzz test - big", () => {
       assert.equal(expected, data);
       assert.equal(decodedLength, encoded.byteLength);
     } catch (e: any) {
-      console.log('expected', expected)
-      console.error(e)
+      console.log("expected", expected);
+      console.error(e);
     }
   }
 });
