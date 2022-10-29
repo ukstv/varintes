@@ -1,10 +1,7 @@
+import { N4, N5, N6, N7 } from "./encoding-length.js";
+
 const MSB = 0x80; // 1000 0000
 const REST = 0x7f; // 0111 1111
-
-const SHIFT_4 = Math.pow(2, 7 * 4);
-const SHIFT_5 = Math.pow(2, 7 * 5);
-const SHIFT_6 = Math.pow(2, 7 * 6);
-const SHIFT_7 = Math.pow(2, 7 * 7);
 
 /**
  * Decode varint from input `buffer`. Return a decoded number and an amount of bytes read while decoding.
@@ -40,25 +37,25 @@ export function decode(buffer: Uint8Array, offset: number = 0): [number, number]
   }
 
   byte = buffer[offset + 4];
-  result += (byte & REST) * SHIFT_4;
+  result += (byte & REST) * N4;
   if (byte < MSB) {
     return [result, 5];
   }
 
   byte = buffer[offset + 5];
-  result += (byte & REST) * SHIFT_5;
+  result += (byte & REST) * N5;
   if (byte < MSB) {
     return [result, 6];
   }
 
   byte = buffer[offset + 6];
-  result += (byte & REST) * SHIFT_6;
+  result += (byte & REST) * N6;
   if (byte < MSB) {
     return [result, 7];
   }
 
   byte = buffer[offset + 7];
-  result += (byte & REST) * SHIFT_7;
+  result += (byte & REST) * N7;
   if (byte < MSB) {
     return [result, 8];
   }

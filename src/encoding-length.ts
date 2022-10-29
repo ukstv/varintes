@@ -1,12 +1,12 @@
-const N1 = Math.pow(2, 7);
-const N2 = Math.pow(2, 14);
-const N3 = Math.pow(2, 21);
-const N4 = Math.pow(2, 28);
-const N5 = Math.pow(2, 35);
-const N6 = Math.pow(2, 42);
-const N7 = Math.pow(2, 49);
-const N8 = Math.pow(2, 56);
-const N9 = Math.pow(2, 63);
+export const N1 = Math.pow(2, 7);
+export const N2 = Math.pow(2, 7 * 2);
+export const N3 = Math.pow(2, 7 * 3);
+export const N4 = Math.pow(2, 7 * 4);
+export const N5 = Math.pow(2, 7 * 5);
+export const N6 = Math.pow(2, 7 * 6);
+export const N7 = Math.pow(2, 7 * 7);
+export const N8 = Math.pow(2, 7 * 8);
+export const N9 = Math.pow(2, 7 * 9);
 
 /**
  * Calculate amount of bytes that it takes to represent a `value` as varint, in bytes.
