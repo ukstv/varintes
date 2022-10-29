@@ -1,18 +1,10 @@
 const MSB = 0x80; // 1000 0000
 const REST = 0x7f; // 0111 1111
 
-const SHIFTS = {
-  0: Math.pow(2, 0),
-  7: Math.pow(2, 7),
-  14: Math.pow(2, 14),
-  21: Math.pow(2, 21),
-  28: Math.pow(2, 28),
-  35: Math.pow(2, 35),
-  42: Math.pow(2, 42),
-  49: Math.pow(2, 49),
-  56: Math.pow(2, 56),
-  63: Math.pow(2, 63),
-};
+const SHIFT_4 = Math.pow(2, 7 * 4);
+const SHIFT_5 = Math.pow(2, 7 * 5);
+const SHIFT_6 = Math.pow(2, 7 * 6);
+const SHIFT_7 = Math.pow(2, 7 * 7);
 
 /**
  * Decode varint from input `buffer`. Return a decoded number and an amount of bytes read while decoding.
@@ -22,21 +14,54 @@ const SHIFTS = {
  * @return [decoded-varint, bytes-read]
  */
 export function decode(buffer: Uint8Array, offset: number = 0): [number, number] {
-  let result = 0;
-  let bytesRead = offset;
-  let byte = 0;
-  let shift: keyof typeof SHIFTS = 0;
+  let byte = buffer[offset];
 
-  do {
-    byte = buffer[bytesRead++];
-    // @ts-ignore
-    result += shift < 28 ? (byte & REST) << shift : (byte & REST) * SHIFTS[shift];
-    shift += 7;
-  } while (byte >= MSB && shift <= 56);
-
-  if (shift > 56 || bytesRead > buffer.length) {
-    throw new RangeError("Could not decode varint");
+  let result = byte & REST;
+  if (byte < MSB) {
+    return [result, 1];
   }
 
-  return [result, bytesRead - offset];
+  byte = buffer[offset + 1];
+  result += (byte & REST) << 7;
+  if (byte < MSB) {
+    return [result, 2];
+  }
+
+  byte = buffer[offset + 2];
+  result += (byte & REST) << 14;
+  if (byte < MSB) {
+    return [result, 3];
+  }
+
+  byte = buffer[offset + 3];
+  result += (byte & REST) << 21;
+  if (byte < MSB) {
+    return [result, 4];
+  }
+
+  byte = buffer[offset + 4];
+  result += (byte & REST) * SHIFT_4;
+  if (byte < MSB) {
+    return [result, 5];
+  }
+
+  byte = buffer[offset + 5];
+  result += (byte & REST) * SHIFT_5;
+  if (byte < MSB) {
+    return [result, 6];
+  }
+
+  byte = buffer[offset + 6];
+  result += (byte & REST) * SHIFT_6;
+  if (byte < MSB) {
+    return [result, 7];
+  }
+
+  byte = buffer[offset + 7];
+  result += (byte & REST) * SHIFT_7;
+  if (byte < MSB) {
+    return [result, 8];
+  }
+
+  throw new RangeError("Could not decode varint");
 }
