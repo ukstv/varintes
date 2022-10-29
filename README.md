@@ -51,8 +51,7 @@ const unpacked = varintes.decodePack(packed); // [1, 17, 4242]
 
 # To Do
 
-- [ ] Faster encode by loop unrolling
-- [ ] Faster decode by loop unrolling
+- [x] Faster decode by loop unrolling
 
 ## License
 
