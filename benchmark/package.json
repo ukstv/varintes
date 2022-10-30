@@ -1,0 +1,13 @@
+{
+  "name": "varint-benchmark",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "benchmark": "node ./benchmark.js"
+  },
+  "dependencies": {
+    "varint": "^6.0.0",
+    "benchmark": "^2.1.4"
+  }
+}

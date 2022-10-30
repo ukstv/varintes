@@ -1,4 +1,4 @@
-name: Test
+name: Benchmark
 on:
   push:
     branches:
@@ -6,7 +6,7 @@ on:
   pull_request:
 jobs:
   test:
-    name: Test on Node.js ${{ matrix.node-version }}
+    name: Benchmark on Node.js ${{ matrix.node-version }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,7 +26,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
-      - name: Run tests
-        run: pnpm test
-        env:
-          FORCE_COLOR: 2
+      - name: Build
+        run: pnpm run build
+      - name: Install benchmark dependencies
+        run: cd ./benchmark && pnpm install --frozen-lockfile --ignore-scripts
+      - name: Run benchmark
+        run: cd ./benchmark && pnpm run benchmark
