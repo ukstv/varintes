@@ -1,9 +1,9 @@
 # Varintes
 
-## Vision
-
 Encode and decode numbers per [unsigned-varint](https://github.com/multiformats/unsigned-varint) specification,
 exposed as [pure ES Module](https://nodejs.org/api/esm.html).
+
+It is **fast**: 1.5x - 10x times faster than original `varint` module.
 
 ## History
 

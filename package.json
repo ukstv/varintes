@@ -1,10 +1,11 @@
 {
   "name": "varintes",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Unsigned Varint encoding and decoding, exposed as ESModule",
   "keywords": [
     "unsigned-varint",
-    "varint"
+    "varint",
+    "fast"
   ],
   "license": "(MIT OR Apache-2.0)",
   "repository": {
