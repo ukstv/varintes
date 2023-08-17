@@ -30,38 +30,38 @@
   "exports": {
     ".": {
       "import": {
-        "default": "./dist/index.js",
-        "types": "./dist/index.d.ts"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
       }
     },
     "./decode": {
       "import": {
-        "default": "./dist/decode.js",
-        "types": "./dist/decode.d.ts"
+        "types": "./dist/decode.d.ts",
+        "default": "./dist/decode.js"
       }
     },
     "./decode-pack": {
       "import": {
-        "default": "./dist/decode-pack.js",
-        "types": "./dist/decode-pack.d.ts"
+        "types": "./dist/decode-pack.d.ts",
+        "default": "./dist/decode-pack.js"
       }
     },
     "./encode": {
       "import": {
-        "default": "./dist/encode.js",
-        "types": "./dist/encode.d.ts"
+        "types": "./dist/encode.d.ts",
+        "default": "./dist/encode.js"
       }
     },
     "./encode-pack": {
       "import": {
-        "default": "./dist/encode-pack.js",
-        "types": "./dist/encode-pack.d.ts"
+        "types": "./dist/encode-pack.d.ts",
+        "default": "./dist/encode-pack.js"
       }
     },
     "./encoding-length": {
       "import": {
-        "default": "./dist/encoding-length.js",
-        "types": "./dist/encoding-length.d.ts"
+        "types": "./dist/encoding-length.d.ts",
+        "default": "./dist/encoding-length.js"
       }
     }
   },
