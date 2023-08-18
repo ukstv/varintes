@@ -44,16 +44,6 @@ addN(6, SIZE);
 addN(7, SIZE);
 
 suite
-  //   .add("decode", () => {
-  //     encodedNumbers.forEach((n) => {
-  //       decode(n);
-  //     });
-  //   })
-  //   .add("varint", () => {
-  //     encodedNumbers.forEach((n) => {
-  //       varint.decode(n);
-  //     });
-  //   })
   .on("cycle", (event) => {
     let name = event.target.name.padEnd(20);
     let hz = formatNumber(event.target.hz.toFixed(0)).padStart(9);
